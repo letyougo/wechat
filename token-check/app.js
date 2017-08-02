@@ -20,14 +20,13 @@ function validateToken(req,res){
     //console.log(query);
     var signature = query.signature;
     var echostr = query.echostr;
-
-
+    var timestamp = query['timestamp'];
+    var nonce = query.nonce;
     var oriArray = new Array();
-    oriArray[0] = query.nonce;
-    oriArray[1] = query.timestamp;
+    oriArray[0] = nonce;
+    oriArray[1] = timestamp;
     oriArray[2] = "xiaoxiaosu";//这里是你在微信开发者中心页面里填的token，而不是****
     oriArray.sort();
-
     var original = oriArray.join('');
     console.log("Original str : " + original);
     console.log("Signature : " + signature );
