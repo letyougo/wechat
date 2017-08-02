@@ -24,7 +24,7 @@ app.get('/',function (req, res) {
     console.log(data.signature,':',code)
 
     if(data.signature == code){
-        return res.send(echostr)
+        return res.send(data.echostr)
     }
 
     return res.send('failed')
