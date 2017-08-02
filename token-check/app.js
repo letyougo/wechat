@@ -4,39 +4,27 @@
 
 
 const url = require("url");
-const crypto = require("crypto");
+
 const express =require('express')
-
-
-function sha1(str){
-    var md5sum = crypto.createHash("sha1");
-    md5sum.update(str);
-    str = md5sum.digest("hex");
-    return str;
-}
+const sha1= require('sha1')
 
 const app = express()
 
 app.get('/',function (req, res) {
     const data = req.query
 
-    const signature = data.signature
-    const timestamp = data.timestamp
-    const nonce = data.nonce
-    const echostr = data.echostr
     const token = 'surui123'
 
 
-    const list = [token,timestamp,nonce]
-    list.sort()
-
-    if(signature == sha1(list.join())){
+    if(data.signature == sha1([token,data.timestamp,data.nonce].sort().join(''))){
         res.send(echostr)
     }else {
-        res.send('oh failed')
+        res.send('failed')
     }
 
     if(Object.keys(query).length == 0){
         res.send('oh this is a handle view')
     }
 })
+
+app.listen(8000)
