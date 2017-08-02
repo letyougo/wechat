@@ -3,9 +3,10 @@
  */
 
 
-var http = require("http");
-var url = require("url");
-var crypto = require("crypto");
+const url = require("url");
+const crypto = require("crypto");
+const express =require('express')
+
 
 function sha1(str){
     var md5sum = crypto.createHash("sha1");
@@ -14,34 +15,28 @@ function sha1(str){
     return str;
 }
 
-function validateToken(req,res){
-    var query = req.query;
-    //console.log("*** URL:" + req.url);
-    //console.log(query);
-    var signature = query.signature;
-    var echostr = query.echostr;
-    var timestamp = query['timestamp'];
-    var nonce = query.nonce;
-    var oriArray = new Array();
-    oriArray[0] = nonce;
-    oriArray[1] = timestamp;
-    oriArray[2] = "xiaoxiaosu";//这里是你在微信开发者中心页面里填的token，而不是****
-    oriArray.sort();
-    var original = oriArray.join('');
-    console.log("Original str : " + original);
-    console.log("Signature : " + signature );
-    var scyptoString = sha1(original);
-    if(signature == scyptoString){
-        res.end(echostr);
-        console.log("Confirm and send echo back");
+const app = express()
+
+app.get('/',function (req, res) {
+    const data = req.query
+
+    const signature = data.signature
+    const timestamp = data.timestamp
+    const nonce = data.nonce
+    const echostr = data.echostr
+    const token = 'surui123'
+
+
+    const list = [token,timestamp,nonce]
+    list.sort()
+
+    if(signature == sha1(list.join())){
+        res.send(echostr)
     }else {
-        res.end("false");
-        console.log("Failed!");
+        res.send('oh failed')
     }
-}
 
-
-var webSvr = http.createServer(validateToken);
-webSvr.listen(8000,function(){
-    console.log("Start validate");
-});
+    if(Object.keys(query).length == 0){
+        res.send('oh this is a handle view')
+    }
+})
