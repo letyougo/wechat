@@ -12,7 +12,7 @@ const app = express()
 
 app.get('/',function (req, res) {
     const data = req.query
-
+    console.log(data)
     const token = 'surui123'
 
 
