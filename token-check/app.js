@@ -16,15 +16,17 @@ app.get('/',function (req, res) {
     const token = 'surui123'
 
 
-    if(data.signature == sha1([token,data.timestamp,data.nonce].sort().join(''))){
-        res.send(echostr)
-    }else {
-        res.send('failed')
+    if(Object.keys(data).length == 0){
+        return res.send('oh this is a handle view')
     }
 
-    if(Object.keys(query).length == 0){
-        res.send('oh this is a handle view')
+    if(data.signature == sha1([token,data.timestamp,data.nonce].sort().join(''))){
+        return res.send(echostr)
     }
+
+    return res.send('failed')
+
+
 })
 
 app.listen(8000)
