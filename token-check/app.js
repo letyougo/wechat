@@ -12,15 +12,18 @@ const app = express()
 
 app.get('/',function (req, res) {
     const data = req.query
-    console.log(data)
-    const token = 'surui123'
+
+    const token = 'xiaoxiaosu'
 
 
     if(Object.keys(data).length == 0){
         return res.send('oh this is a handle view')
     }
 
-    if(data.signature == sha1([token,data.timestamp,data.nonce].sort().join(''))){
+    var code = sha1([token,data.timestamp,data.nonce].sort().join(''))
+    console.log(data.signature,':',code)
+
+    if(data.signature == code){
         return res.send(echostr)
     }
 
