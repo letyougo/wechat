@@ -18,7 +18,13 @@
   },
   "homepage": "https://github.com/letyougo/wechat#readme",
   "dependencies": {
+    "bluebird": "^3.5.0",
+    "body-parser": "^1.17.2",
+    "cookie-parser": "^1.4.3",
     "express": "^4.15.3",
-    "sha1": "^1.1.1"
+    "express-middlewares-js": "^1.0.3",
+    "nodejs-wechat": "0.0.8",
+    "sha1": "^1.1.1",
+    "superagent": "^3.5.2"
   }
 }
